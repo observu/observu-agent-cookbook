@@ -1,0 +1,24 @@
+# 
+# Observu configuration file
+#
+
+# API key (at the cluster level)
+KEY "<%= node[:observu][:key] %>"
+
+#
+# Required monitor name configuration
+#
+
+<% if node[:observu][:monitor_name_cmd] %>
+# Scripted monitor name
+monitor_name `<%= node[:observu][:monitor_name_cmd] %>`
+<% end %>
+<% if node[:observu][:monitor_name] %>
+# Explicit monitor name
+monitor_name "<%= node[:observu][:monitor_name] %>"
+<% end %>
+
+# standard logfile monitoring
+<% (node[:observu][:logfile] || []).each do |logfile| %>
+logfile "<%= logfile[:path] %>"
+<% end %>

@@ -27,23 +27,8 @@ end
 package dep_pack do
   action :install
 end
-  
-
-
-# Create configuration file
-
-template "observu.conf" do
-  path "/etc/observu.conf"
-  source "observu.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, resources(:service => "observu")
-end
-
 
 # Run installer
-
 bash "install_observu_agent" do
   cwd Chef::Config[:file_cache_path]
   code <<-EOH
@@ -59,6 +44,23 @@ service "observu" do
   subscribes :restart, resources(:bash => "install_observu_agent")
   supports :restart => true, :start => true, :stop => true
 end
+
+# Create configuration file
+
+template "observu.conf" do
+  path "/etc/observu.conf"
+  source "observu.conf.erb"
+  owner "root"
+  group "root"
+  mode 0644
+  notifies :restart, resources(:service => "observu")
+end
+
+
+
+
+
+
 
 # Start daemon
 
