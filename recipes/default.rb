@@ -49,7 +49,7 @@ bash "install_observu_agent" do
   code <<-EOH
   tar -xzf observu_agent.tar.gz
   cd linux_observu_agent
-  ./install.sh -s -n
+  ./install.sh -s -n -m
   EOH
   creates "/usr/local/observu/observu_daemon.pl"
 end
