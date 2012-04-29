@@ -28,6 +28,17 @@ package dep_pack do
   action :install
 end
 
+case node[:platform]
+  when "debian","ubuntu"
+    dep_ssl_pack = "libcrypt-ssleay-perl"
+  when "redhat","centos","scientific","fedora","suse"
+    dep_ssl_pack = "perl-Crypt-SSLeay"
+end
+
+package dep_ssl_pack do
+  action :install
+end
+
 # Run installer
 bash "install_observu_agent" do
   cwd Chef::Config[:file_cache_path]
